@@ -20,17 +20,15 @@ public class Keep2ShareUploadMultipleCommand extends PostCommand<Keep2ShareUploa
 
     private final String accessToken;
     private final List<File> files;
+    private String parentId = "/";
 
     public Keep2ShareUploadMultipleCommand(String accessToken, List<File> files) {
         this.accessToken = accessToken;
-        Optional.ofNullable(this.accessToken).orElseThrow(() -> new Keep2ShareAuthenticationException("The token can not be null"));
         this.files = files;
-        Optional.ofNullable(this.files).orElseThrow(() -> new Keep2ShareAuthenticationException("The files can not be null"));
     }
 
     public Keep2ShareUploadMultipleCommand(String accessToken, File folder) {
         this.accessToken = accessToken;
-        Optional.ofNullable(this.accessToken).orElseThrow(() -> new Keep2ShareAuthenticationException("The token can not be null"));
         if(!folder.isDirectory()) {
             throw new Keep2ShareException(folder.getName() +" is not a disrectory");
         }
@@ -38,6 +36,11 @@ public class Keep2ShareUploadMultipleCommand extends PostCommand<Keep2ShareUploa
 
     }
 
+
+    public Keep2ShareUploadMultipleCommand setParentId(String parentId) {
+        this.parentId = parentId;
+        return this;
+    }
 
     @Override
     protected String getEndpoint() {
@@ -51,7 +54,9 @@ public class Keep2ShareUploadMultipleCommand extends PostCommand<Keep2ShareUploa
 
     @Override
     protected void validate() {
-
+        Optional.ofNullable(this.accessToken).orElseThrow(() -> new Keep2ShareAuthenticationException("The token can not be null"));
+        Optional.ofNullable(this.files).orElseThrow(() -> new Keep2ShareAuthenticationException("The files can not be null"));
+        Optional.ofNullable(this.parentId).orElseThrow(() -> new Keep2ShareAuthenticationException("The parentId can not be null"));
     }
 
     public Keep2ShareUploadMultipleView call() {
@@ -59,10 +64,10 @@ public class Keep2ShareUploadMultipleCommand extends PostCommand<Keep2ShareUploa
         files.forEach(file -> System.out.println(file.getAbsolutePath()));
         var result = new Keep2ShareUploadMultipleView();
         for(var file : files) {
-            var responseunmashed = new Keep2SharePreUploadCommand(this.accessToken).call();
+            var responseunmashed = new Keep2SharePreUploadCommand(this.accessToken).setParentId(parentId).call();
             if (responseunmashed != null) {
                 Unirest.setTimeouts(0, 0);
-                HttpResponse<String> response = null;
+                HttpResponse<String> response;
                 try {
                     response = Unirest.post(responseunmashed.getForm_action())
                             .field("file", file)
