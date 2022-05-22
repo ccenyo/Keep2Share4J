@@ -1,3 +1,5 @@
+package commands;
+
 import views.DefaultView;
 
 import java.util.HashMap;
@@ -16,7 +18,7 @@ public abstract class PostCommand<T extends DefaultView> extends Command<T>{
     }
 
     @Override
-    protected String getBodyInJson() {
+    protected Map<String, Object> getBodyInJson() {
         return null;
     }
 

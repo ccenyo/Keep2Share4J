@@ -1,9 +1,12 @@
+package commands;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import exceptions.Keep2ShareException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import views.DefaultView;
@@ -23,22 +26,23 @@ public abstract class Command<T extends DefaultView> {
 
     protected abstract Map<String, Object> getParamsInLink();
     protected abstract Map<String, Object> getParamsInBody();
-    protected abstract String getBodyInJson();
+    protected abstract Map<String, Object> getBodyInJson();
     protected abstract Map<String, Object> getHeaders();
-    protected abstract String getEndPoint();
+    protected abstract String getEndpoint();
     protected abstract Method getMethod();
     protected abstract Class<T> getClassForMapper();
+    protected abstract void validate();
 
 
     public T call() {
-
+        validate();;
         Unirest.setTimeouts(0, 0);
 
         switch (getMethod()) {
             case POST -> {
-                var post = Unirest.post(getEndPoint());
+                var post = Unirest.post(getEndpoint());
                 if(getBodyInJson() != null) {
-                    post.body(getBodyInJson());
+                    post.body(new JSONObject(getBodyInJson()).toString());
                 }
                 if(!getParamsInBody().isEmpty()) {
                     post.fields(getParamsInBody());

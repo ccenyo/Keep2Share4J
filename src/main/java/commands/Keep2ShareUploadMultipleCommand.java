@@ -1,3 +1,5 @@
+package commands;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,7 +8,6 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import exceptions.Keep2ShareAuthenticationException;
 import exceptions.Keep2ShareException;
-import views.ErrorResponse;
 import views.Keep2ShareUploadMultipleView;
 import views.Keep2ShareUploadView;
 
@@ -39,13 +40,18 @@ public class Keep2ShareUploadMultipleCommand extends PostCommand<Keep2ShareUploa
 
 
     @Override
-    protected String getEndPoint() {
+    protected String getEndpoint() {
         return null;
     }
 
     @Override
     protected Class<Keep2ShareUploadMultipleView> getClassForMapper() {
         return null;
+    }
+
+    @Override
+    protected void validate() {
+
     }
 
     public Keep2ShareUploadMultipleView call() {

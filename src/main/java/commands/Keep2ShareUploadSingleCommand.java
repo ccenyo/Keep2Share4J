@@ -1,3 +1,5 @@
+package commands;
+
 import exceptions.Keep2ShareAuthenticationException;
 import exceptions.Keep2ShareException;
 import views.Keep2ShareUploadView;
@@ -35,13 +37,18 @@ public class Keep2ShareUploadSingleCommand extends PostCommand<Keep2ShareUploadV
     }
 
     @Override
-    protected String getEndPoint() {
+    protected String getEndpoint() {
         return endPoint;
     }
 
     @Override
     protected Class<Keep2ShareUploadView> getClassForMapper() {
         return Keep2ShareUploadView.class;
+    }
+
+    @Override
+    protected void validate() {
+
     }
 
     @Override

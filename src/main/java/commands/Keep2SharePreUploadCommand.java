@@ -1,3 +1,5 @@
+package commands;
+
 import exceptions.Keep2ShareAuthenticationException;
 import views.Keep2SharePreUploadView;
 
@@ -12,7 +14,6 @@ public class Keep2SharePreUploadCommand extends PostCommand<Keep2SharePreUploadV
 
     public Keep2SharePreUploadCommand(String accessToken) {
         this.accessToken = accessToken;
-        Optional.ofNullable(this.accessToken).orElseThrow(() -> new Keep2ShareAuthenticationException("The token can not be null"));
     }
 
     @Override
@@ -21,7 +22,7 @@ public class Keep2SharePreUploadCommand extends PostCommand<Keep2SharePreUploadV
     }
 
     @Override
-    protected String getEndPoint() {
+    protected String getEndpoint() {
         return ENDPOINT;
     }
 
@@ -31,7 +32,13 @@ public class Keep2SharePreUploadCommand extends PostCommand<Keep2SharePreUploadV
     }
 
     @Override
-    protected String getBodyInJson() {
-        return String.format("{\"access_token\":\"%s\"}", this.accessToken);
+    protected void validate() {
+        Optional.ofNullable(this.accessToken).orElseThrow(() -> new Keep2ShareAuthenticationException("The token can not be null"));
+    }
+
+
+    @Override
+    protected Map<String, Object> getBodyInJson() {
+        return new HashMap<>(){{put("access_token", accessToken);}};
     }
 }
