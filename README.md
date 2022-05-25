@@ -22,7 +22,11 @@ you have to define an environment file  in your resource folder``env.properties`
 add the maven repository to your pom.xml
 
 ```java
-
+<dependency>
+  <groupId>org.github</groupId>
+  <artifactId>keep2share4j</artifactId>
+  <version>1.0.1</version>
+</dependency>
 ```
 
 ##Basic usage
