@@ -12,12 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 17
-        run:
-          echo "access_token=${{ secrets.TOKEN }}" > ${{ github.workspace }}/src/test/resources/env.properties
         uses: actions/setup-java@v2
         with:
           java-version: '17'
           distribution: 'adopt'
           cache: maven
+      - name: create settings file
+        run:
+          echo "access_token=${{ secrets.TOKEN }}" > ${{ github.workspace }}/src/test/resources/env.properties
       - name: Build with Maven
         run: mvn -B package --file pom.xml
