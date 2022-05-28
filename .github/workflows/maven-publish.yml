@@ -22,15 +22,15 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
-          server-id: org.github # Value of the distributionManagement/repository/id field of the pom.xml
-          settings-path: ${{ org.github.workspace }} # location for the settings.xml file
+          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+          settings-path: ${{ github.workspace }} # location for the settings.xml file
       - name: create settings file
         run:
-          echo "access_token=${{ secrets.TOKEN }}" > ${{ org.github.workspace }}/src/test/resources/env.properties
+          echo "access_token=${{ secrets.TOKEN }}" > ${{ github.workspace }}/src/test/resources/env.properties
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
       - name: Publish to GitHub Packages Apache Maven
         run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
         env:
-          GITHUB_TOKEN: ${{ org.github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
