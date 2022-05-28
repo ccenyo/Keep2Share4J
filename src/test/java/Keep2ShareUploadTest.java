@@ -1,5 +1,5 @@
-import commands.*;
-import exceptions.Keep2ShareException;
+import org.github.exceptions.Keep2ShareException;
+import org.github.Keep2ShareClient;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

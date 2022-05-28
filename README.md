@@ -23,7 +23,7 @@ add the maven repository to your pom.xml
 
 ```java
 <dependency>
-  <groupId>org.github</groupId>
+  <groupId>org.org.github</groupId>
   <artifactId>keep2share4j</artifactId>
   <version>1.0.1</version>
 </dependency>
@@ -35,15 +35,15 @@ add the maven repository to your pom.xml
 you can create a ``client`` object in different ways
 
 ```java
-    Keep2ShareClient client = Keep2ShareClient.fromResource("env.properties");
+    org.github.Keep2ShareClient client = org.github.Keep2ShareClient.fromResource("env.properties");
 ```
 or
 ```java
-    Keep2ShareClient client = Keep2ShareClient.fromFile(new File("path"));
+    org.github.Keep2ShareClient client = org.github.Keep2ShareClient.fromFile(new File("path"));
 ```
 or
 ```java
-    Keep2ShareClient client = Keep2ShareClient.of("token");
+    org.github.Keep2ShareClient client = org.github.Keep2ShareClient.of("token");
 ```
 
 

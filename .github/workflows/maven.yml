@@ -19,6 +19,6 @@ jobs:
           cache: maven
       - name: create settings file
         run:
-          echo "access_token=${{ secrets.TOKEN }}" > ${{ github.workspace }}/src/test/resources/env.properties
+          echo "access_token=${{ secrets.TOKEN }}" > ${{ org.github.workspace }}/src/test/resources/env.properties
       - name: Build with Maven
         run: mvn -B package --file pom.xml
